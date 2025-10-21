@@ -6,15 +6,32 @@ on:
     branches: [ main ]
 
 jobs:
-    check:
-        runs-on: ubuntu-latest
-        
-        steps:
+
+    security_checkov:
+      runs-on: ubuntu-latest        
+      steps:
+        - uses: actions/checkout@v4
+        - name: checkov
+          run: |
+            uv pip install checkov
+            uv run checkov -d .    
+    security_dep_check:
+      runs-on: ubuntu-latest        
+      needs: [security_checkov]
+      steps:
+        - uses: actions/checkout@v4
+        - name: pip-audit
+          run: |
+            uv venv
+            uv pip compile pyproject.toml -o requirements.txt
+            uv pip install pip-audit
+            uv run pip-audit
+    
+    ci_artifact:
+      runs-on: ubuntu-latest        
+      needs: security_checkov
+      steps:
         - uses: actions/checkout@v4
         - name: build
           run: |
-            ls -la        
-        - name: checagem
-          run: |
-            echo "Fazendo a checagem ${{ vars.AWS_ACCESS_KEY }}"
-            
+            uv build
