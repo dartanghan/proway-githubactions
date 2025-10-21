@@ -1,0 +1,26 @@
+description: |
+    Este exemplo de ci simples
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+    check:
+        runs-on: ubuntu-latest
+        
+        steps:
+        - uses: actions/checkout@v4
+        
+        - name: checagem
+          run: |
+            echo "Fazendo a checagem"
+    build:
+        needs: [check]
+        runs-on: ubuntu-latest
+        
+        steps:
+        - uses: actions/checkout@v4
+        - name: build
+          run: |
+            echo "Montando"
