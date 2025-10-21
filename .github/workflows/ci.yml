@@ -13,6 +13,7 @@ jobs:
         - uses: actions/checkout@v4
         - name: checkov
           run: |
+            curl -LsSf https://astral.sh/uv/install.sh | sh
             uv pip install checkov
             uv run checkov -d .    
     security_dep_check:
@@ -22,6 +23,7 @@ jobs:
         - uses: actions/checkout@v4
         - name: pip-audit
           run: |
+            curl -LsSf https://astral.sh/uv/install.sh | sh
             uv venv
             uv pip compile pyproject.toml -o requirements.txt
             uv pip install pip-audit
@@ -34,4 +36,5 @@ jobs:
         - uses: actions/checkout@v4
         - name: build
           run: |
+            curl -LsSf https://astral.sh/uv/install.sh | sh
             uv build
