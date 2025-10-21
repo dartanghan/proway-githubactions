@@ -28,7 +28,7 @@ jobs:
             uv venv
             uv pip compile pyproject.toml -o requirements.txt
             uv pip install pip-audit
-            uv run pip-audit
+            uv run pip-audit -r requirements.txt 
     
     ci_artifact:
       runs-on: ubuntu-latest        
