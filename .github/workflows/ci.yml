@@ -11,19 +11,10 @@ jobs:
         
         steps:
         - uses: actions/checkout@v4
-        
+        - name: build
+          run: |
+            ls -la        
         - name: checagem
           run: |
-            echo "Fazendo a checagem"
-    build:
-        needs: [check]
-        runs-on: ubuntu-latest
-        
-        steps:
-        - uses: actions/checkout@v4
-        - name: build
-          run: |
-            ls -la
-        - name: build
-          run: |
-            echo "Montando"
+            echo "Fazendo a checagem ${{ vars.AWS_ACCESS_KEY }}"
+            
